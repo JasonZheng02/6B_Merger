@@ -28,8 +28,48 @@ public class Merger {
       , int nItems  // number of items in the merged list
                     // = just past end of list1
       ) {
-    }
-
+        ArrayList<String> resultingArray = new ArrayList<String>();  
+        
+        ArrayList<String> list0 = new ArrayList<String>();
+        for (int index = start0; index < start1; index++){
+            list0.add(usersData.get(index));
+        }
+        
+        ArrayList<String> list1 = new ArrayList<String>();
+        for (int index = start1; index < nItems; index++){
+            list1.add(usersData.get(index));
+        }
+        
+        while (list0.isEmpty() == false && list1.isEmpty() == false){
+            if (list0.get(0).compareTo(list1.get(0)) < 0) {
+                resultingArray.add(list0.remove(0));
+            }             
+            else if (list0.get(0).compareTo(list1.get(0)) > 0) {
+                resultingArray.add(list1.remove(0));
+            }
+            else {
+                resultingArray.add(list0.remove(0));
+                resultingArray.add(list1.remove(0));
+            }
+            
+            if (list0.isEmpty() == false && list1.isEmpty() == true){
+                while (list0.isEmpty() == false) {
+                    resultingArray.add(list0.get(0));
+                    list0.remove(0);
+                }
+            }
+        
+            if (list0.isEmpty() == true && list1.isEmpty() == false){
+                while (list1.isEmpty() == false) {
+                    resultingArray.add(list1.get(0));
+                    list1.remove(0);
+                }
+            }
+        }
+        for (int index = start0; index < nItems; index++) {
+            usersData.set(index, resultingArray.get(index - start0));
+        }
+      }
 
     /**
       @return a string representation of the user's data
